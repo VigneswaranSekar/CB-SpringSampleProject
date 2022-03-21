@@ -13,8 +13,12 @@ import java.util.Optional;
 @RestController
 public class UserController {
 
-    @Autowired
     private UserService UserService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        UserService = userService;
+    }
 
     @GetMapping("/")
     public List<Employee> getUsers() {
