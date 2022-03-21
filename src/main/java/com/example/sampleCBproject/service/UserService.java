@@ -13,20 +13,21 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private List<Employee> myEmployees = new ArrayList<>();
 
-    @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    public void setEmployeeRepository(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
     public List<Employee> getUsers() {
-//         return myEmployees;
         List<Employee> emp = new ArrayList<>();
         employeeRepository.findAll().forEach(emp::add);
         return emp;
     }
 
     public HttpStatus postUser(Employee e) {
-//        myEmployees.add(e);
         try {
             employeeRepository.save(e);
             return HttpStatus.ACCEPTED;
@@ -37,12 +38,16 @@ public class UserService {
     }
 
     public Optional<Employee> getOneUser(String id) {
-        Optional<Employee> emp = employeeRepository.findById(id);
-        return emp;
+        return employeeRepository.findById(id);
     }
 
     public HttpStatus deleteUser(String id) {
         employeeRepository.deleteById(id);
         return HttpStatus.ACCEPTED;
+    }
+
+    public HttpStatus putUsers(Iterable<Employee> e) {
+        employeeRepository.saveAll(e);
+        return HttpStatus.CREATED;
     }
 }

@@ -35,4 +35,9 @@ public class UserController {
     public HttpStatus deleteUser(@PathVariable String id) {
         return UserService.deleteUser(id);
     }
+
+    @PutMapping("/")
+    public  HttpStatus putUsers(@RequestBody Iterable<Employee> e) {
+        return UserService.putUsers(e);
+    }
 }
